@@ -1,6 +1,8 @@
 # Polymarket Arbitrage Bot
 
-A Python-based arbitrage bot that exploits price inefficiencies in Polymarket's binary prediction markets.
+A Rust-based arbitrage bot that exploits price inefficiencies in Polymarket's binary prediction markets.
+
+> **⚡ Performance Update**: This project has been refactored from Python to Rust for significantly improved execution speed and lower latency, which is critical for arbitrage opportunities.
 
 ## Strategy
 
@@ -36,7 +38,7 @@ Profit: $0.03 (3.1% return)
 
 ### Prerequisites
 
-- Python 3.9 or higher
+- Rust 1.70 or higher ([Install Rust](https://rustup.rs/))
 - Polygon (MATIC) wallet with private key
 - USDC on Polygon network for trading
 
@@ -44,21 +46,16 @@ Profit: $0.03 (3.1% return)
 
 1. Clone the repository:
 ```bash
-cd /home/pete/Documents/software_projects/prediction-bots
+git clone <repository-url>
+cd money-burner-9000
 ```
 
-2. Create virtual environment:
+2. Build the project:
 ```bash
-python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+cargo build --release
 ```
 
-3. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-4. Configure environment:
+3. Configure environment:
 ```bash
 cp .env.example .env
 # Edit .env and add your PRIVATE_KEY
@@ -91,7 +88,7 @@ LOG_LEVEL=INFO
 Test without risking real funds:
 
 ```bash
-python main.py
+cargo run --release
 ```
 
 The bot will scan markets and log opportunities without executing trades.
@@ -106,7 +103,13 @@ The bot will scan markets and log opportunities without executing trades.
 4. Run the bot:
 
 ```bash
-python main.py
+cargo run --release
+```
+
+Or use the built binary:
+
+```bash
+./target/release/money-burner-9000
 ```
 
 ## How It Works
@@ -202,16 +205,17 @@ Check `positions.json` for detailed position history.
 ### Project Structure
 ```
 .
-├── main.py                 # Entry point
-├── bot.py                  # Main orchestration
-├── config.py               # Configuration management
-├── market_scanner.py       # Market data fetching
-├── arbitrage_detector.py   # Opportunity detection
-├── order_executor.py       # Trade execution
-├── position_manager.py     # Position tracking
-├── requirements.txt        # Dependencies
-├── .env.example           # Config template
-└── claude.md              # Strategy documentation
+├── src/
+│   ├── main.rs                  # Entry point
+│   ├── bot.rs                   # Main orchestration
+│   ├── config.rs                # Configuration management
+│   ├── market_scanner.rs        # Market data fetching
+│   ├── arbitrage_detector.rs    # Opportunity detection
+│   ├── order_executor.rs        # Trade execution
+│   └── position_manager.rs      # Position tracking
+├── Cargo.toml                   # Dependencies
+├── .env.example                 # Config template
+└── README.md                    # Documentation
 ```
 
 ### Adding Features
@@ -225,7 +229,8 @@ Check `positions.json` for detailed position history.
 ## API Reference
 
 - [Polymarket Documentation](https://docs.polymarket.com)
-- [py-clob-client](https://github.com/Polymarket/py-clob-client)
+- [Rust Documentation](https://doc.rust-lang.org/)
+- [Tokio Async Runtime](https://tokio.rs/)
 
 ## Disclaimer
 
